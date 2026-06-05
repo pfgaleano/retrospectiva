@@ -19,6 +19,7 @@ export default function Retrospectiva() {
   const [allData, setAllData] = useState([]);
   const [guardado, setGuardado] = useState(false);
   const [cargando, setCargando] = useState(false);
+  const [toast, setToast] = useState(false);
 
   async function iniciarFormulario() {
     const n = nombreInput.trim();
@@ -36,15 +37,30 @@ export default function Retrospectiva() {
 
   async function guardar() {
     setCargando(true);
-    const payload = { nombre, ...respuestas };
+    const payload = {
+      nombre,
+      bien: respuestas.bien || "",
+      mal: respuestas.mal || "",
+      mejorar: respuestas.mejorar || "",
+    };
     const { error } = await supabase
       .from("retrospectivas")
       .upsert(payload, { onConflict: "nombre" });
     setCargando(false);
-    if (!error) setGuardado(true);
+    if (!error) {
+        setGuardado(true);
+        setToast(true);
+        setTimeout(() => setToast(false), 3000);
+      }
+    else alert("Hubo un error al guardar. Intentá de nuevo.");
   }
 
   async function abrirPanel() {
+    const clave = prompt("Ingresá la contraseña para ver el panel:");
+    if (clave !== "Bruno2026Gabi") {
+      alert("Contraseña incorrecta.");
+      return;
+    }
     const { data } = await supabase.from("retrospectivas").select("*");
     setAllData(data || []);
     setView("panel");
@@ -56,6 +72,27 @@ export default function Retrospectiva() {
       background: "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)",
       fontFamily: "'Georgia', 'Times New Roman', serif",
     }}>
+      {/* Toast notification */}
+      {toast && (
+        <div style={{
+          position: "fixed",
+          bottom: 32,
+          left: "50%",
+          transform: "translateX(-50%)",
+          background: "#27ae60",
+          color: "white",
+          padding: "14px 28px",
+          borderRadius: 12,
+          fontSize: 15,
+          fontWeight: "bold",
+          boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
+          zIndex: 9999,
+          animation: "fadeIn 0.3s ease",
+        }}>
+          ✓ Respuestas guardadas correctamente
+        </div>
+      )}
+
       {/* Header */}
       <div style={{
         background: "rgba(255,255,255,0.04)",
