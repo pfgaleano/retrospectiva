@@ -19,7 +19,6 @@ export default function Retrospectiva() {
   const [allData, setAllData] = useState([]);
   const [guardado, setGuardado] = useState(false);
   const [cargando, setCargando] = useState(false);
-  const [toast, setToast] = useState(false);
 
   async function iniciarFormulario() {
     const n = nombreInput.trim();
@@ -49,8 +48,7 @@ export default function Retrospectiva() {
     setCargando(false);
     if (!error) {
         setGuardado(true);
-        setToast(true);
-        setTimeout(() => setToast(false), 3000);
+        setView("exito");
       } else {
         alert("Error: " + JSON.stringify(error));
       }
@@ -74,6 +72,43 @@ export default function Retrospectiva() {
       fontFamily: "'Georgia', 'Times New Roman', serif",
     }}>
       {/* Toast notification */}
+
+      {/* VISTA: Éxito */}
+      {view === "exito" && (
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "80vh", padding: 24 }}>
+          <div style={{
+            background: "rgba(255,255,255,0.07)",
+            borderRadius: 20,
+            padding: "48px 32px",
+            maxWidth: 400,
+            width: "100%",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+            border: "1px solid rgba(46,204,113,0.3)",
+            textAlign: "center",
+          }}>
+            <div style={{ fontSize: 72, marginBottom: 16 }}>✅</div>
+            <h2 style={{ color: "white", fontSize: 26, fontWeight: "bold", margin: "0 0 12px" }}>
+              ¡Gracias, {nombre}!
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 15, lineHeight: 1.6, margin: "0 0 32px" }}>
+              Tus respuestas se guardaron correctamente. Nos vemos en la retro presencial 🙌
+            </p>
+            <button onClick={() => { setView("inicio"); setNombreInput(""); setRespuestas({}); setGuardado(false); }} style={{
+              background: "linear-gradient(90deg, #f0c040, #e67e22)",
+              border: "none",
+              borderRadius: 12,
+              padding: "14px 28px",
+              color: "#1a1a1a",
+              fontSize: 15,
+              fontWeight: "bold",
+              cursor: "pointer",
+            }}>
+              Volver al inicio
+            </button>
+          </div>
+        </div>
+      )}
+
       {toast && (
         <div style={{
           position: "fixed",
