@@ -109,25 +109,7 @@ export default function Retrospectiva() {
         </div>
       )}
 
-      {toast && (
-        <div style={{
-          position: "fixed",
-          bottom: 32,
-          left: "50%",
-          transform: "translateX(-50%)",
-          background: "#27ae60",
-          color: "white",
-          padding: "14px 28px",
-          borderRadius: 12,
-          fontSize: 15,
-          fontWeight: "bold",
-          boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
-          zIndex: 9999,
-          animation: "fadeIn 0.3s ease",
-        }}>
-          ✓ Respuestas guardadas correctamente
-        </div>
-      )}
+
 
       {/* Header */}
       <div style={{
