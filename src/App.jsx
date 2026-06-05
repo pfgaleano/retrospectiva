@@ -9,7 +9,6 @@ const CATEGORIES = [
   { key: "bien", label: "✅ Salió bien", color: "#1a6b3c", bg: "#e6f7ee", accent: "#2ecc71" },
   { key: "mal", label: "❌ No salió bien", color: "#8b1a1a", bg: "#fdeaea", accent: "#e74c3c" },
   { key: "mejorar", label: "💡 Para mejorar", color: "#7a5c00", bg: "#fffbea", accent: "#f1c40f" },
-  { key: "acciones", label: "🚀 Acciones de mejora", color: "#1a3a6b", bg: "#eaf1fd", accent: "#3498db" },
 ];
 
 export default function Retrospectiva() {
